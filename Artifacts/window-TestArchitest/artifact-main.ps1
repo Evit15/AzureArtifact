@@ -52,17 +52,7 @@ trap
 
 try
 {
-    #arguments passed to this script should be passed to the artifact script
-    $command = $Script:MyInvocation.MyCommand
-    $scriptName = $Script:MyInvocation.MyCommand.Name
-    $scriptLine = $MyInvocation.Line
-    $scriptArgIndex = $scriptLine.IndexOf($scriptName) + $scriptName.Length + 1
-    if($scriptLine.Length -gt $scriptArgIndex)
-    {
-        $scriptArgs = $scriptLine.Substring($scriptArgIndex)
-    }
-
-    iex ".\artifact.ps1 $scriptArgs"
+    iex ".\artifact.ps1"
 
     Write-Host 'Artifact installed successfully.'
 }
