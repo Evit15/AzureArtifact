@@ -60,20 +60,35 @@ $downloadISS = 'https://raw.githubusercontent.com/Evit15/AzureArtifact/master/Ar
 $localFile = Join-Path $logFolder 'TestArchitect.zip'
 $localISS = Join-Path $logFolder 'install.iss'
 #### Download TA
-DownloadToFilePath $downloadUrl $localFile
-#### Download ISS
-DownloadToFilePath $downloadISS $localISS
-Unzip $localFile "$logFolder\TestArchitect"
-$fullLocalFile = Join-Path $logFolder 'TestArchitect\TestArchitect_8.3.4.071_x64.exe'
-$argumentList = "-s -f1'$localISS'"
-Write-Output "Running install $fullLocalFile $argumentList"
-$retCode = Start-Process -FilePath $fullLocalFile -ArgumentList $argumentList -Wait -PassThru
+if(![System.IO.File]::Exists($localFile)){
+	DownloadToFilePath $downloadUrl $localFile
+	Unzip $localFile "$logFolder\TestArchitect"
+}
 
-if ($retCode.ExitCode -ne 0 -and $retCode.ExitCode -ne 3010)
-{
-    Write-Error "Product installation of $fullLocalFile failed with exit code: $($retCode.ExitCode.ToString())"    
+#### Download ISS
+if(![System.IO.File]::Exists($localFile)){
+	DownloadToFilePath $downloadISS $localISS
 }
-else
-{
-    Write-Output "Test Architect install succeeded. "
-}
+$fullLocalFile = Join-Path $logFolder 'TestArchitect\TestArchitect_8.3.4.071_x64.exe'
+$argumentList = "-s -f1$localISS"
+Write-Output "Running install $fullLocalFile $argumentList"
+# $retCode = Start-Process -FilePath $fullLocalFile -ArgumentList $argumentList -Wait -PassThru
+# if ($retCode.ExitCode -ne 0 -and $retCode.ExitCode -ne 3010)
+# {
+    # Write-Error "Product installation of $fullLocalFile failed with exit code: $($retCode.ExitCode.ToString())"    
+# }
+# else
+# {
+    # Write-Output "Test Architect install succeeded. "
+# }
+
+$command = 'cmd.exe /c '+'"'+ $fullLocalFile +'"'+ ' -s -f1'+ '"'+$localISS +'"'	
+Invoke-Expression -Command:$command
+Write-Output "Test Architect install succeeded. "
+
+
+
+
+
+
+
