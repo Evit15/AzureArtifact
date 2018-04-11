@@ -1,0 +1,14 @@
+{
+  "$schema": "https://raw.githubusercontent.com/Azure/azure-devtestlab/master/schemas/2016-11-28/dtlArtifacts.json",
+  "title": "Test Architect",
+  "description": "Installs Test Architect",
+  "publisher": "LogiGear",
+  "tags": [
+    "Windows"
+  ],
+  "iconUri": "https://www.testarchitect.com/images/HomePage/ta-logo.png",
+  "targetOsType": "Windows",
+  "runCommand": {
+    "commandToExecute": "[concat('powershell.exe -ExecutionPolicy bypass \"& ./artifact-main.ps1\"')]"
+  }
+}
