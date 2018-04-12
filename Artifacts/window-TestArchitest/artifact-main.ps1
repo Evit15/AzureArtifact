@@ -52,7 +52,7 @@ trap
 
 try
 {
-    iex ".\artifact.ps1"
+    iex ".\TAOpenWithSession.exe 'powershell .\artifact.ps1'"
 
     Write-Host 'Artifact installed successfully.'
 }
